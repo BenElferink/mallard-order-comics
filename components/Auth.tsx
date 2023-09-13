@@ -74,7 +74,7 @@ const Auth = () => {
         {!installedWallets.length ? (
           <p className='mt-[50%]'>No wallets installed...</p>
         ) : (
-          <div className='max-w-[555px] px-8 text-center'>
+          <div className='max-w-[555px] px-8 mx-auto text-center'>
             <h2 className='text-lg'>Connect Wallet</h2>
 
             {/* @ts-ignore */}

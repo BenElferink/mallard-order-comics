@@ -11,7 +11,7 @@ const inter = Roboto({ weight: '300', subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} bg-black`}>
       <Toaster />
 
       <MeshProvider>
