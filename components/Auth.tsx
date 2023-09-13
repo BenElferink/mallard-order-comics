@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/AuthContext'
 import truncateStringInMiddle from '@/functions/truncateStringInMiddle'
 import Modal from './Modal'
 import { LS_KEYS } from '@/constants'
-import Link from 'next/link'
 
 const Auth = () => {
   const installedWallets = useWalletList()
