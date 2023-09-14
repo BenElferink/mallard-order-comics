@@ -1,9 +1,5 @@
-import { useAuth } from '@/contexts/AuthContext'
-
 const Page = () => {
-  const { populatedWallet } = useAuth()
-
-  return <main className='min-h-screen'>{JSON.stringify(populatedWallet)}</main>
+  return <main className='min-h-screen flex flex-col items-center'>HOME</main>
 }
 
 export default Page

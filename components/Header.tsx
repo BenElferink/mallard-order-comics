@@ -9,10 +9,10 @@ const Header = () => {
 
   return (
     <header id='header' className='sticky top-0 z-20 p-4 flex items-start justify-between'>
-      <div className='flex flex-col items-center'>
+      <Link href='/' className='flex flex-col items-center'>
         <Image src='/media/logo.png' alt='logo' priority unoptimized width={150} height={150} />
         <h1 className='text-2xl whitespace-nowrap'>COMICS</h1>
-      </div>
+      </Link>
 
       <div className='flex flex-wrap items-start justify-end'>
         {populatedWallet?.stakeKey ? (
