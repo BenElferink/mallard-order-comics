@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import { Roboto } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { MeshProvider } from '@meshsdk/react'
@@ -12,6 +13,11 @@ const inter = Roboto({ weight: '300', subsets: ['latin'] })
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={`${inter.className} bg-black`}>
+      <Head>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>TMO - Comics</title>
+      </Head>
+
       <Toaster />
 
       <MeshProvider>
