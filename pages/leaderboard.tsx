@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '@/utils/api'
-import calculatePoints from '@/functions/calculatePoints'
+import populateLeaderboard from '@/functions/populateLeaderboard'
 import Loader from '@/components/Loader'
 import type { PopulatedToken } from '@/@types'
 import { POLICY_IDS } from '@/constants'
@@ -20,7 +20,7 @@ const Page = () => {
     api.policy
       .getData(POLICY_IDS['COMICS_ISSUE_ONE'])
       .then(({ tokens }) => {
-        const payload = Object.entries(calculatePoints(tokens as PopulatedToken[]))
+        const payload = Object.entries(populateLeaderboard(tokens as PopulatedToken[]))
           .map(([walletId, points]) => ({
             walletId,
             points,

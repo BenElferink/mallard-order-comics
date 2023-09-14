@@ -1,6 +1,6 @@
 import type { Address, PopulatedToken, StakeKey } from '@/@types'
 
-const calculatePoints = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
+const populateLeaderboard = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
   const leaderboard: Record<StakeKey | Address, number> = {}
 
   tokens.forEach((token) => {
@@ -14,4 +14,4 @@ const calculatePoints = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
   return leaderboard
 }
 
-export default calculatePoints
+export default populateLeaderboard
