@@ -2,6 +2,7 @@
   "name": "mallard-order-comics",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/",
   "author": "Ben Elferink <ben.elferink@icloud.com> (https://github.com/BenElferink)",
   "scripts": {
     "dev": "next dev",
