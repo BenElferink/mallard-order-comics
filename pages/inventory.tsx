@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import formatIpfsReference from '@/functions/formatIpfsReference'
 import Auth from '@/components/Auth'
 import Loader from '@/components/Loader'
+import getTokenSerialNumberPoints from '@/functions/getTokenSerialNumberPoints'
 
 const Page = () => {
   const { populatingWallet, populatedWallet } = useAuth()
@@ -24,21 +25,25 @@ const Page = () => {
           </div>
 
           <div className='flex flex-wrap justify-center'>
-            {populatedWallet.tokens.map((token) => (
-              <div key={token.tokenId} className='p-4 flex flex-col items-center text-center'>
-                <Image
-                  src={formatIpfsReference(token.thumb).url}
-                  alt=''
-                  width={0}
-                  height={0}
-                  priority
-                  unoptimized
-                  className='w-[140px] h-[210px] object-cover rounded-lg'
-                />
-                <h5>{token.name.split('-')[1].toUpperCase().trim()}</h5>
-                <h6 className='text-sm'>{token.points} POINTS</h6>
-              </div>
-            ))}
+            {populatedWallet.tokens.map((token) => {
+              const serialPoints = getTokenSerialNumberPoints(token.serialNumber)
+
+              return (
+                <div key={token.tokenId} className='p-4 flex flex-col items-center text-center'>
+                  <Image
+                    src={formatIpfsReference(token.thumb).url}
+                    alt=''
+                    width={0}
+                    height={0}
+                    priority
+                    unoptimized
+                    className='w-[140px] h-[210px] object-cover rounded-lg'
+                  />
+                  <h5>{token.name.split('-')[1].toUpperCase().trim()}</h5>
+                  <h6 className='text-sm'>{serialPoints ? `${serialPoints} POINTS` : ''}</h6>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}

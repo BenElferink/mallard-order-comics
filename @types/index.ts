@@ -19,7 +19,6 @@ export interface PopulatedToken {
   serialNumber: number
   coverVariant: CoverVariant
   isClaimed: boolean
-  points: number
 }
 
 export interface Utxo {

@@ -48,53 +48,6 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
     const coverVariant = attributes['Cover Variant']
     const isClaimed = attributes['Physical Redemption'] === 'Claimed'
 
-    let points = 0
-
-    ;[
-      {
-        value: 'Common',
-        points: 1,
-      },
-      {
-        value: 'Rare',
-        points: 10,
-      },
-      {
-        value: 'Super Rare',
-        points: 20,
-      },
-      {
-        value: 'Mythic',
-        points: 2000,
-      },
-    ].forEach((item) => {
-      if (coverVariant === item.value) points += item.points
-    })
-    ;[
-      {
-        minValue: 1,
-        maxValue: 1,
-        points: 500,
-      },
-      {
-        minValue: 2,
-        maxValue: 5,
-        points: 100,
-      },
-      {
-        minValue: 6,
-        maxValue: 10,
-        points: 50,
-      },
-      {
-        minValue: 11,
-        maxValue: 100,
-        points: 25,
-      },
-    ].forEach((item) => {
-      if (serialNumber >= item.minValue && serialNumber <= item.maxValue) points += item.points
-    })
-
     console.log('Fetching addresses of Token ID:', tokenId)
 
     const assetAddresses = await blockfrost.assetsAddresses(tokenId, {
@@ -140,7 +93,6 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
       serialNumber,
       coverVariant,
       isClaimed,
-      points,
     }
 
     return payload

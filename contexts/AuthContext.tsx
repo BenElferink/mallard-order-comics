@@ -43,7 +43,7 @@ export const AuthProvider = (props: PropsWithChildren) => {
       const stakeKey = (await wallet.getRewardAddresses())[0]
       const assets = await wallet.getPolicyIdAssets(POLICY_IDS['COMICS_ISSUE_ONE'])
       const populatedTokens = await Promise.all(assets.map(({ unit }) => api.token.getData(unit)) || [])
-      const points = populateLeaderboard(populatedTokens, stakeKey)[stakeKey]
+      const points = populateLeaderboard(populatedTokens, stakeKey)[stakeKey] || 0
 
       setPopulatedWallet({
         stakeKey,
