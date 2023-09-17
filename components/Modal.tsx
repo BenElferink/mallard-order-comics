@@ -12,10 +12,10 @@ const Modal = (props: PropsWithChildren<{ open: boolean; onClose: () => void }>)
       }
     >
       {open ? (
-        <section className='relative bg-gradient-to-b from-purple-500 via-blue-500 to-green-500 p-0.5 rounded-xl'>
-          <div className='overflow-y-auto w-screen h-screen sm:min-w-[42vw] sm:max-w-[90vw] sm:min-h-[69vh] sm:max-h-[90vh] sm:w-fit sm:h-fit p-8 sm:rounded-xl bg-zinc-800'>
+        <section className='relative rounded-xl'>
+          <div className='overflow-y-auto w-screen h-screen sm:w-fit sm:h-fit sm:max-w-[90vw] sm:max-h-[90vh] p-8 sm:rounded-xl bg-neutral-950 border'>
             <button className='w-6 h-6 rounded-full absolute top-2 right-4 z-10' onClick={onClose}>
-              <XMarkIcon className='w-8 h-8 animate-pulse hover:animate-spin' />
+              <XMarkIcon className='w-8 h-8 hover:animate-spin' />
             </button>
 
             {children}

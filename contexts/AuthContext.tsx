@@ -26,7 +26,7 @@ export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = (props: PropsWithChildren) => {
   const { children } = props
-  const { connecting, connected, name, wallet, disconnect } = useWallet()
+  const { connected, name, wallet, disconnect } = useWallet()
 
   const [openConnectModal, setOpenConnectModal] = useState(false)
   const toggleConnectModal = (bool?: boolean) => setOpenConnectModal((prev) => bool ?? !prev)
@@ -37,8 +37,6 @@ export const AuthProvider = (props: PropsWithChildren) => {
   const populate = useCallback(async (): Promise<void> => {
     try {
       setPopulatingWallet(true)
-      toast.dismiss()
-      toast.loading('Loading Profile')
 
       const stakeKey = (await wallet.getRewardAddresses())[0]
       const assets = await wallet.getPolicyIdAssets(POLICY_IDS['COMICS_ISSUE_ONE'])
@@ -50,9 +48,6 @@ export const AuthProvider = (props: PropsWithChildren) => {
         points,
         tokens: populatedTokens,
       })
-
-      toast.dismiss()
-      toast.success('Profile Loaded')
     } catch (error: any) {
       setPopulatedWallet(null)
       disconnect()
@@ -65,20 +60,18 @@ export const AuthProvider = (props: PropsWithChildren) => {
   }, [wallet, disconnect])
 
   useEffect(() => {
-    if (connecting) {
-      toast.dismiss()
-      toast.loading('Connecting Wallet')
-    }
-
     if (connected) {
       toast.dismiss()
-      toast.success(`Connected ${name}`)
+      toast.loading('CONNECTING WALLET')
 
-      populate()
+      populate().then(() => {
+        toast.dismiss()
+        toast.success(`${name.toUpperCase().replace('WALLET', '').trim()} CONNECTED`)
+      })
     } else {
       setPopulatedWallet(null)
     }
-  }, [connecting, connected, name, populate])
+  }, [connected, populate, name])
 
   return (
     <AuthContext.Provider
