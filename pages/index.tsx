@@ -13,11 +13,11 @@ const Page = () => {
             <Image
               src={`/media/cover_varients/${rarity}.jpeg`}
               alt={rarity}
-              width={280}
-              height={430}
+              width={220}
+              height={340}
               className='w-[220px] border-2 border-yellow-900 drop-shadow-[0_0_0.5rem_rgba(0,0,0,1)]'
             />
-            <div className={`text-center text-sm sm:text-xl font-normal ${antonio.className}`}>{rarity.toUpperCase().replaceAll('_', ' ')}</div>
+            <div className={`mt-2 text-center text-sm sm:text-xl font-normal ${antonio.className}`}>{rarity.toUpperCase().replaceAll('_', ' ')}</div>
           </div>
         ))}
       </div>
