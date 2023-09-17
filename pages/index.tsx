@@ -16,13 +16,17 @@ const Page = () => {
               width={220}
               height={340}
               className='w-[220px] border-2 border-yellow-900 drop-shadow-[0_0_0.5rem_rgba(0,0,0,1)]'
+              priority
+              unoptimized
             />
             <div className={`mt-2 text-center text-sm sm:text-xl font-normal ${antonio.className}`}>{rarity.toUpperCase().replaceAll('_', ' ')}</div>
           </div>
         ))}
       </div>
 
-      <div className={`mt-8 sm:mt-12 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>GAIN POINTS FOR COLLECTING EDITIONS OF TMO COMICS!</div>
+      <div className={`mt-8 sm:mt-12 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>
+        GAIN POINTS FOR COLLECTING EDITIONS OF TMO COMICS!
+      </div>
     </main>
   )
 }

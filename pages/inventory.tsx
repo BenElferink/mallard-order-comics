@@ -1,46 +1,46 @@
 import Image from 'next/image'
+import { Antonio, Imbue } from 'next/font/google'
 import { useAuth } from '@/contexts/AuthContext'
-import formatIpfsReference from '@/functions/formatIpfsReference'
+import getTokenSerialNumberPoints from '@/functions/getTokenSerialNumberPoints'
 import Auth from '@/components/Auth'
 import Loader from '@/components/Loader'
-import getTokenSerialNumberPoints from '@/functions/getTokenSerialNumberPoints'
+
+const imbue = Imbue({ weight: '300', subsets: ['latin'] })
+const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
   const { populatingWallet, populatedWallet } = useAuth()
 
   return (
-    <main className='min-h-screen flex flex-col items-center'>
-      <h2 className='text-2xl'>MY INVENTORY</h2>
+    <main className='min-h-screen px-12 flex flex-col items-center'>
+      <h2 className={`text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>MY INVENTORY</h2>
 
       {!populatedWallet?.stakeKey ? (
-        populatingWallet ? (
-          <Loader />
-        ) : (
-          <Auth />
-        )
+        <div className='mt-8'>{populatingWallet ? <Loader /> : <Auth />}</div>
       ) : (
-        <div className='max-w-[1100px] flex flex-col items-center'>
-          <div>
-            TOTAL COLLECTOR'S POINTS: <span>{populatedWallet.points} POINTS</span>
+        <div className='w-full flex flex-col items-center'>
+          <div className={`w-full my-4 p-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl ${antonio.className}`}>
+            TOTAL COLLECTOR'S POINTS:{' '}
+            <span className='w-2/5 p-4 ml-8 text-center rounded-lg border border-red-800 bg-red-950'>{populatedWallet.points} POINTS</span>
           </div>
 
-          <div className='flex flex-wrap justify-center'>
+          <div className='w-full mb-12 max-h-[150vh] overflow-y-scroll p-8 flex flex-wrap justify-center rounded-lg bg-neutral-900/50'>
             {populatedWallet.tokens.map((token) => {
               const serialPoints = getTokenSerialNumberPoints(token.serialNumber)
 
               return (
-                <div key={token.tokenId} className='p-4 flex flex-col items-center text-center'>
+                <div key={token.tokenId} className={`m-6 flex flex-col items-center text-center ${antonio.className}`}>
                   <Image
-                    src={formatIpfsReference(token.thumb).url}
+                    src={`/media/cover_varients/${token.coverVariant.toLowerCase().replaceAll(' ', '_')}.jpeg`}
                     alt=''
-                    width={0}
-                    height={0}
+                    width={150}
+                    height={170}
+                    className='border border-teal-900'
                     priority
                     unoptimized
-                    className='w-[140px] h-[210px] object-cover rounded-lg'
                   />
-                  <h5>{token.name.split('-')[1].toUpperCase().trim()}</h5>
-                  <h6 className='text-sm'>{serialPoints ? `${serialPoints} POINTS` : ''}</h6>
+                  <h5 className='mt-2'>{token.name.split('-')[1].toUpperCase().trim()}</h5>
+                  <h6 className='mt-1 text-sm text-sky-500'>{serialPoints ? `${serialPoints} POINTS` : ''}</h6>
                 </div>
               )
             })}

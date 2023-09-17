@@ -13,8 +13,8 @@ const Header = () => {
   return (
     <header id='header' className='pt-8 sm:pt-20 pb-20 px-4 sm:px-12 flex items-start justify-between'>
       <Link href='/' className='flex flex-col items-center'>
-        <Image src='/media/logo.png' alt='logo' width={130} height={130} />
-        <Image src='/media/comics.svg' alt='comics' width={100} height={50} className='mt-2' />
+        <Image src='/media/logo.png' alt='logo' width={130} height={130} priority unoptimized />
+        <Image src='/media/comics.svg' alt='comics' width={100} height={50} className='mt-2' priority unoptimized />
       </Link>
 
       <div className='flex flex-wrap items-start justify-end'>

@@ -12,7 +12,7 @@ const inter = Inter({ weight: '300', subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={inter.className}>
+    <div className={`max-w-[1400px] mx-auto ${inter.className}`}>
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <title>TMO - Comics</title>
