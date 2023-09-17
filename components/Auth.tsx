@@ -105,7 +105,7 @@ const Auth = () => {
                   key={item.name}
                   onClick={() => connect(item.name)}
                   disabled={connected || connecting}
-                  className='w-[200px] m-1 p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-zinc-700 hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed'
+                  className='w-[200px] m-1 p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed'
                 >
                   <Image src={item.icon} alt='' width={35} height={35} className='mx-4 drop-shadow-[0_0_1px_rgba(0,0,0,1)]' priority unoptimized />
                   {item.name.toUpperCase().replace('WALLET', '').trim()}
