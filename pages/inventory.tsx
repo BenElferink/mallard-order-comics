@@ -20,7 +20,7 @@ const Page = () => {
       ) : (
         <div className='w-full flex flex-col items-center'>
           <div className={`w-full my-4 p-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl ${antonio.className}`}>
-            TOTAL COLLECTOR'S POINTS:{' '}
+            TOTAL COLLECTOR&apos;S POINTS:{' '}
             <span className='w-2/5 p-4 ml-8 text-center rounded-lg border border-red-800 bg-red-950'>{populatedWallet.points} POINTS</span>
           </div>
 
