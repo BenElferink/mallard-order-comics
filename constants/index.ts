@@ -1,5 +1,6 @@
 export const API_KEYS = {
   BLOCKFROST_API_KEY: process.env.BLOCKFROST_API_KEY || '',
+  SATURN_API_KEY: process.env.SATURN_API_KEY || '',
 
   FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
   FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
@@ -15,10 +16,6 @@ export const POLICY_IDS = {
 }
 
 export const ALLOWED_POLICIES = [POLICY_IDS['COMICS_ISSUE_ONE']]
-
-export const ERROR_TYPES = {
-  INVALID_WALLET_IDENTIFIER: 'INVALID_WALLET_IDENTIFIER',
-}
 
 // local storage
 export const LS_KEYS = {

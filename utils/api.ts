@@ -1,12 +1,12 @@
 import axios from 'axios'
-import type { PopulatedToken } from '@/@types'
+import type { PopulatedToken, PopulatedWallet, StakeKey } from '@/@types'
 import type { PolicyResponse } from '@/pages/api/policy/[policy_id]'
 
 class Api {
   baseUrl: string
 
-  constructor() {
-    this.baseUrl = '/api'
+  constructor(baseUrl?: string) {
+    this.baseUrl = `${baseUrl || ''}/api`
   }
 
   private handleError = async (error: any, reject: (reason: string) => void, retry: () => Promise<any>): Promise<any> => {
@@ -58,8 +58,26 @@ class Api {
       })
     },
   }
+
+  wallet = {
+    getData: (stakeKey: StakeKey): Promise<PopulatedWallet> => {
+      const uri = `${this.baseUrl}/wallet/${stakeKey}`
+
+      return new Promise(async (resolve, reject) => {
+        try {
+          console.log('Fetching wallet:', stakeKey)
+
+          const { data } = await axios.get<PopulatedWallet>(uri)
+
+          console.log('Fetched wallet:', data.stakeKey)
+
+          return resolve(data)
+        } catch (error: any) {
+          return await this.handleError(error, reject, async () => await this.wallet.getData(stakeKey))
+        }
+      })
+    },
+  }
 }
 
-const api = new Api()
-
-export default api
+export default Api

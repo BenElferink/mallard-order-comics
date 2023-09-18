@@ -13,10 +13,11 @@ export interface PopulatedToken {
   fingerprint: string
 
   name: string
-  thumb: string
   owner: StakeKey | Address
+  ownerHandle: string
 
   serialNumber: number
+  level: number
   coverVariant: CoverVariant
   isClaimed: boolean
 }
@@ -34,6 +35,7 @@ export interface Utxo {
 
 export interface PopulatedWallet {
   stakeKey: StakeKey
+  handle: string
   points: number
   tokens: PopulatedToken[]
 }

@@ -57,7 +57,7 @@ const Auth = () => {
           ) : null}
 
           {connected && !!populatedWallet
-            ? truncateStringInMiddle(populatedWallet.stakeKey, 7)
+            ? populatedWallet.handle || truncateStringInMiddle(populatedWallet.stakeKey, 7)
             : connecting || populatingWallet
             ? 'CONNECTING...'
             : 'CONNECT WALLET'}

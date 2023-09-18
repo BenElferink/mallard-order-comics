@@ -1,12 +1,13 @@
 import { Antonio, Imbue } from 'next/font/google'
 import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
-import api from '@/utils/api'
+import Api from '@/utils/api'
 import populateLeaderboard from '@/functions/populateLeaderboard'
 import Loader from '@/components/Loader'
 import type { PopulatedToken } from '@/@types'
 import { POLICY_IDS } from '@/constants'
 
+const api = new Api()
 const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 
@@ -17,6 +18,7 @@ const Page = () => {
   const [leaderboard, setLeaderboard] = useState<
     {
       walletId: string
+      handle: string
       points: number
     }[]
   >([])
@@ -33,12 +35,7 @@ const Page = () => {
     api.policy
       .getData(POLICY_IDS['COMICS_ISSUE_ONE'])
       .then(({ tokens }) => {
-        const payload = Object.entries(populateLeaderboard(tokens as PopulatedToken[]))
-          .map(([walletId, points]) => ({
-            walletId,
-            points,
-          }))
-          .sort((a, b) => b.points - a.points)
+        const payload = populateLeaderboard(tokens as PopulatedToken[])
 
         setLeaderboard(payload)
         setMaxPages(Math.ceil(payload.length / rowsPerPage))
@@ -69,7 +66,9 @@ const Page = () => {
               <tbody>
                 <tr>
                   <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? myIndexOnBoard + 1 : 0}</td>
-                  <td className='py-8 px-4 text-start'>{myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].walletId : populatedWallet?.stakeKey}</td>
+                  <td className='py-8 px-4 text-start'>
+                    {myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].walletId : populatedWallet.handle || populatedWallet.stakeKey}
+                  </td>
                   <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].points : 0} POINTS</td>
                 </tr>
               </tbody>
@@ -85,14 +84,14 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              {leaderboard.map(({ walletId, points }, idx) => {
+              {leaderboard.map(({ walletId, handle, points }, idx) => {
                 const minRange = page * rowsPerPage - rowsPerPage
                 const maxRange = page * rowsPerPage - 1
 
                 return idx >= minRange && idx <= maxRange ? (
                   <tr key={walletId}>
                     <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-center`}>{idx + 1}</td>
-                    <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-start`}>{walletId}</td>
+                    <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-start`}>{handle || walletId}</td>
                     <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-center`}>{points} POINTS</td>
                   </tr>
                 ) : null

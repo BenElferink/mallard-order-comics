@@ -4,6 +4,7 @@ import getTokenSerialNumberPoints from './getTokenSerialNumberPoints'
 const populateLeaderboard = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
   const whoOwnsWhat: Record<StakeKey | Address, PopulatedToken[]> = {}
   const leaderboard: Record<StakeKey | Address, number> = {}
+  const handles: Record<StakeKey | Address, string> = {}
 
   tokens.forEach((token) => {
     const walletId = token.owner
@@ -18,6 +19,9 @@ const populateLeaderboard = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
   })
 
   Object.entries(whoOwnsWhat).forEach(([walletId, tokens]) => {
+    const handle = tokens.find((token) => !!token.ownerHandle)?.ownerHandle || ''
+    if (handle) handles[walletId] = handle
+
     let points = 0,
       mythicCount = tokens.reduce((prev, { coverVariant }) => (coverVariant === 'Mythic' ? prev + 1 : prev), 0),
       superRareCount = tokens.reduce((prev, { coverVariant }) => (coverVariant === 'Super Rare' ? prev + 1 : prev), 0),
@@ -66,7 +70,13 @@ const populateLeaderboard = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
     leaderboard[walletId] = (leaderboard[walletId] || 0) + points
   })
 
-  return leaderboard
+  return Object.entries(leaderboard)
+    .map(([walletId, points]) => ({
+      walletId,
+      handle: handles[walletId] || '',
+      points,
+    }))
+    .sort((a, b) => b.points - a.points)
 }
 
 export default populateLeaderboard

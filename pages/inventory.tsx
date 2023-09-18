@@ -26,7 +26,6 @@ const Page = () => {
 
           <div className='w-full max-h-[150vh] overflow-y-scroll p-8 flex flex-wrap justify-center rounded-lg bg-neutral-900/50'>
             {populatedWallet.tokens.map((token) => {
-              const displayName = token.name.split('-')[1].toUpperCase().trim()
               const coverRarity = token.coverVariant.toLowerCase().replaceAll(' ', '_')
               const serialPoints = getTokenSerialNumberPoints(token.serialNumber)
 
@@ -41,7 +40,7 @@ const Page = () => {
                     priority
                     unoptimized
                   />
-                  <h5 className='mt-2'>{displayName}</h5>
+                  <h5 className='mt-2'>{token.name}</h5>
                   <h6 className='mt-1 text-sm text-sky-500'>{serialPoints ? `${serialPoints} POINTS` : ''}</h6>
                 </div>
               )

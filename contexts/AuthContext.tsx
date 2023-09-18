@@ -1,10 +1,8 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useWallet } from '@meshsdk/react'
-import api from '@/utils/api'
-import populateLeaderboard from '@/functions/populateLeaderboard'
+import Api from '@/utils/api'
 import type { PopulatedWallet } from '@/@types'
-import { POLICY_IDS } from '@/constants'
 
 interface AuthContext {
   populatingWallet: boolean
@@ -20,6 +18,7 @@ const initContext: AuthContext = {
   toggleConnectModal: () => {},
 }
 
+const api = new Api()
 const AuthContext = createContext(initContext)
 
 export const useAuth = () => useContext(AuthContext)
@@ -39,14 +38,13 @@ export const AuthProvider = (props: PropsWithChildren) => {
       setPopulatingWallet(true)
 
       const stakeKey = (await wallet.getRewardAddresses())[0]
-      const assets = await wallet.getPolicyIdAssets(POLICY_IDS['COMICS_ISSUE_ONE'])
-      const populatedTokens = await Promise.all(assets.map(({ unit }) => api.token.getData(unit)) || [])
-      const points = populateLeaderboard(populatedTokens, stakeKey)[stakeKey] || 0
+      const { handle, points, tokens } = await api.wallet.getData(stakeKey)
 
       setPopulatedWallet({
         stakeKey,
+        handle,
         points,
-        tokens: populatedTokens,
+        tokens,
       })
     } catch (error: any) {
       setPopulatedWallet(null)

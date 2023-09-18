@@ -2,6 +2,7 @@ import blockfrost from '@/utils/blockfrost'
 import formatHex from './formatHex'
 import formatIpfsReference from './formatIpfsReference'
 import type { Address, PopulatedToken, StakeKey, TokenId } from '@/@types'
+import adaHandle from '@/utils/adaHandle'
 
 const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
   try {
@@ -18,14 +19,10 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
 
     console.log('Fetched token:', fingerprint)
 
-    const name = onchain_metadata?.name?.toString() || formatHex.fromHex((asset_name || tokenId.replace(policyId, '')).substring(8))
-    const thumb = formatIpfsReference(
-      onchain_metadata?.image
-        ? Array.isArray(onchain_metadata.image)
-          ? onchain_metadata.image.join('')
-          : onchain_metadata.image.toString()
-        : ''.replaceAll(',', '')
-    ).ipfs
+    const name = (onchain_metadata?.name?.toString() || formatHex.fromHex((asset_name || tokenId.replace(policyId, '')).substring(8)))
+      .split('-')[1]
+      .toUpperCase()
+      .trim()
 
     const meta = onchain_metadata?.attributes || onchain_metadata || metadata || {}
     const attributes: Record<string, any> = {}
@@ -81,16 +78,20 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
 
     const owner = owners[0].stakeKey || owners[0].address
 
+    let ownerHandle = ''
+    if (owner.indexOf('stake1') === 0) ownerHandle = await adaHandle.resolveWalletHandle(owner)
+
     const payload: PopulatedToken = {
       policyId,
       tokenId,
       fingerprint,
 
       name,
-      thumb,
       owner,
+      ownerHandle,
 
       serialNumber,
+      level: 0,
       coverVariant,
       isClaimed,
     }
