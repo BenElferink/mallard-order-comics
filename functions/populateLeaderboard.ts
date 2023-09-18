@@ -50,6 +50,15 @@ const populateLeaderboard = (tokens: PopulatedToken[], stakeKey?: StakeKey) => {
       commonCount--
     }
 
+    // any remaining non-sets
+    while (mythicCount || superRareCount || rareCount || commonCount) {
+      points += mythicCount + superRareCount + rareCount + commonCount
+      mythicCount = 0
+      superRareCount = 0
+      rareCount = 0
+      commonCount = 0
+    }
+
     tokens.forEach(({ serialNumber }) => {
       points += getTokenSerialNumberPoints(serialNumber)
     })
