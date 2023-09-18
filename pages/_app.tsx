@@ -12,21 +12,24 @@ const inter = Inter({ weight: '300', subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`max-w-[1400px] mx-auto ${inter.className}`}>
-      <Head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-        <title>TMO - Comics</title>
-      </Head>
+    <div>
+      <div className={`max-w-[1400px] mx-auto ${inter.className}`}>
+        <Head>
+          <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+          <title>TMO - Comics</title>
+        </Head>
 
-      <Toaster />
+        <Toaster />
 
-      <MeshProvider>
-        <AuthProvider>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </AuthProvider>
-      </MeshProvider>
+        <MeshProvider>
+          <AuthProvider>
+            <Header />
+            <Component {...pageProps} />
+          </AuthProvider>
+        </MeshProvider>
+      </div>
+
+      <Footer />
     </div>
   )
 }
