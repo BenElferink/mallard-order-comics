@@ -26,20 +26,22 @@ const Page = () => {
 
           <div className='w-full mb-12 max-h-[150vh] overflow-y-scroll p-8 flex flex-wrap justify-center rounded-lg bg-neutral-900/50'>
             {populatedWallet.tokens.map((token) => {
+              const displayName = token.name.split('-')[1].toUpperCase().trim()
+              const coverRarity = token.coverVariant.toLowerCase().replaceAll(' ', '_')
               const serialPoints = getTokenSerialNumberPoints(token.serialNumber)
 
               return (
                 <div key={token.tokenId} className={`m-6 flex flex-col items-center text-center ${antonio.className}`}>
                   <Image
-                    src={`/media/cover_varients/${token.coverVariant.toLowerCase().replaceAll(' ', '_')}.jpeg`}
-                    alt=''
+                    src={`/media/cover_varients/${coverRarity}.jpeg`}
+                    alt={coverRarity}
                     width={150}
                     height={170}
                     className='border border-teal-900'
                     priority
                     unoptimized
                   />
-                  <h5 className='mt-2'>{token.name.split('-')[1].toUpperCase().trim()}</h5>
+                  <h5 className='mt-2'>{displayName}</h5>
                   <h6 className='mt-1 text-sm text-sky-500'>{serialPoints ? `${serialPoints} POINTS` : ''}</h6>
                 </div>
               )

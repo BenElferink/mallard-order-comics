@@ -100,17 +100,29 @@ const Auth = () => {
             {error ? <p className='text-red-400'>{error?.message || error?.toString()}</p> : null}
 
             <div className='max-w-[420px] mx-auto flex flex-wrap items-center justify-center'>
-              {installedWallets.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => connect(item.name)}
-                  disabled={connected || connecting}
-                  className='w-[200px] m-1 p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed'
-                >
-                  <Image src={item.icon} alt='' width={35} height={35} className='mx-4 drop-shadow-[0_0_1px_rgba(0,0,0,1)]' priority unoptimized />
-                  {item.name.toUpperCase().replace('WALLET', '').trim()}
-                </button>
-              ))}
+              {installedWallets.map((item) => {
+                const walletName = item.name.toUpperCase().replace('WALLET', '').trim()
+
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => connect(item.name)}
+                    disabled={connected || connecting}
+                    className='w-[200px] m-1 p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed'
+                  >
+                    <Image
+                      src={item.icon}
+                      alt={walletName}
+                      width={35}
+                      height={35}
+                      className='mx-4 drop-shadow-[0_0_1px_rgba(0,0,0,1)]'
+                      priority
+                      unoptimized
+                    />
+                    {walletName}
+                  </button>
+                )
+              })}
             </div>
           </div>
         )}
