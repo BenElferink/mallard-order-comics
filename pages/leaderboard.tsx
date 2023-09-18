@@ -67,7 +67,9 @@ const Page = () => {
                 <tr>
                   <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? myIndexOnBoard + 1 : 0}</td>
                   <td className='py-8 px-4 text-start'>
-                    {myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].walletId : populatedWallet.handle || populatedWallet.stakeKey}
+                    {myIndexOnBoard !== -1
+                      ? leaderboard[myIndexOnBoard].handle || leaderboard[myIndexOnBoard].walletId
+                      : populatedWallet.handle || populatedWallet.stakeKey}
                   </td>
                   <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].points : 0} POINTS</td>
                 </tr>
