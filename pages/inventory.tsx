@@ -5,19 +5,19 @@ import getTokenSerialNumberPoints from '@/functions/getTokenSerialNumberPoints'
 import Auth from '@/components/Auth'
 import Loader from '@/components/Loader'
 
-const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
+const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
   const { populatingWallet, populatedWallet } = useData()
 
   return (
-    <main className='min-h-screen mb-12 px-12 flex flex-col items-center'>
+    <main className={`min-h-screen mb-12 px-12 flex flex-col items-center ${antonio.className}`}>
       <h2 className={`mb-8 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>MY INVENTORY</h2>
 
       {!!populatedWallet?.stakeKey ? (
         <div className='w-full flex flex-col items-center'>
-          <div className={`w-full p-8 mb-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl ${antonio.className}`}>
+          <div className='w-full p-8 mb-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl'>
             TOTAL COLLECTOR&apos;S POINTS:{' '}
             <span className='w-2/5 p-4 ml-8 text-center rounded-lg border border-red-800 bg-red-950'>{populatedWallet.points} POINTS</span>
           </div>
@@ -28,7 +28,7 @@ const Page = () => {
               const serialPoints = getTokenSerialNumberPoints(token.serialNumber)
 
               return (
-                <div key={token.tokenId} className={`m-6 flex flex-col items-center text-center ${antonio.className}`}>
+                <div key={token.tokenId} className='m-6 flex flex-col items-center text-center'>
                   <Image
                     src={`/media/cover_varients/${coverRarity}.jpeg`}
                     alt={coverRarity}

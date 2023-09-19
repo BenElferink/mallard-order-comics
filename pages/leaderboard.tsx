@@ -4,8 +4,8 @@ import { useData } from '@/contexts/DataContext'
 import populateLeaderboard from '@/functions/populateLeaderboard'
 import Loader from '@/components/Loader'
 
-const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
+const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
   const { populatingWallet, populatedWallet, populatingTokens, populatedTokens } = useData()
@@ -39,11 +39,11 @@ const Page = () => {
       <div className='max-w-[900px] w-full flex flex-col items-center'>
         {populatedWallet ? (
           <table className='w-full mb-8 border-separate border-spacing-0 border rounded-lg bg-sky-950/80'>
-            <thead className='border-b-2'>
+            <thead className={`border-b-2 ${antonio.className}`}>
               <tr>
-                <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR PLACE</th>
-                <th className={`p-4 border-b-2 text-cyan-400 text-start text-2xl ${antonio.className}`}>YOUR NAME</th>
-                <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR POINTS</th>
+                <th className='p-4 border-b-2 text-cyan-400 text-center text-2xl'>YOUR PLACE</th>
+                <th className='p-4 border-b-2 text-cyan-400 text-start text-2xl'>YOUR NAME</th>
+                <th className='p-4 border-b-2 text-cyan-400 text-center text-2xl'>YOUR POINTS</th>
               </tr>
             </thead>
             <tbody>
@@ -66,11 +66,11 @@ const Page = () => {
 
         {leaderboard.length ? (
           <table className='w-full border-separate border-spacing-0 border border-sky-500 rounded-lg bg-gray-950/80'>
-            <thead className='border-b-2 border-b-sky-500'>
+            <thead className={`border-b-2 border-b-sky-500 ${antonio.className}`}>
               <tr>
-                <th className={`py-4 px-8 border-b-2 border-b-sky-500 text-cyan-400 text-center text-2xl ${antonio.className}`}>PLACE</th>
-                <th className={`py-4 border-b-2 border-b-sky-500 text-cyan-400 text-start text-2xl ${antonio.className}`}>NAME</th>
-                <th className={`py-4 px-8 border-b-2 border-b-sky-500 text-cyan-400 text-center text-2xl ${antonio.className}`}>COLLECTORS POINTS</th>
+                <th className='py-4 px-8 border-b-2 border-b-sky-500 text-cyan-400 text-center text-2xl'>PLACE</th>
+                <th className='py-4 border-b-2 border-b-sky-500 text-cyan-400 text-start text-2xl'>NAME</th>
+                <th className='py-4 px-8 border-b-2 border-b-sky-500 text-cyan-400 text-center text-2xl'>COLLECTORS POINTS</th>
               </tr>
             </thead>
             <tbody>

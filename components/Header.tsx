@@ -11,7 +11,7 @@ const Header = () => {
   const { populatedWallet } = useData()
 
   return (
-    <header id='header' className='pt-8 sm:pt-20 pb-20 px-4 sm:px-12 flex items-start justify-between'>
+    <header id='header' className={`pt-8 sm:pt-20 pb-20 px-4 sm:px-12 flex items-start justify-between ${antonio.className}`}>
       <Link href='/' className='flex flex-col items-center'>
         <Image src='/media/logo.png' alt='logo' width={130} height={130} priority unoptimized />
         <Image src='/media/comics.svg' alt='comics' width={100} height={50} className='mt-2' priority unoptimized />
@@ -22,13 +22,13 @@ const Header = () => {
           <Fragment>
             <Link
               href='/leaderboard'
-              className={`min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${antonio.className}`}
+              className='min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed'
             >
               LEADERBOARD
             </Link>
             <Link
               href='/inventory'
-              className={`min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${antonio.className}`}
+              className='min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed'
             >
               MY INVENTORY
             </Link>

@@ -1,32 +1,23 @@
-import Link from 'next/link'
+// import Link from 'next/link'
 import Image from 'next/image'
 import { Antonio, Imbue } from 'next/font/google'
 import { FormEvent, useMemo, useState } from 'react'
 import { useData } from '@/contexts/DataContext'
 import Api from '@/utils/api'
 import formatHex from '@/functions/formatHex'
+import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import Loader from '@/components/Loader'
 import { POLICY_IDS } from '@/constants'
 
 const api = new Api()
-const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
+const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
   const { populatedWallet, populatedTokens } = useData()
   const [loading, setLoading] = useState(false)
   const [serialToCheck, setSerialToCheck] = useState('')
   const [checkedClaims, setCheckedClaims] = useState<{ serial: number; claimed: boolean }[]>([])
-
-  const getSerialStringFromSerialNumber = (num: number) => {
-    let str = num.toString()
-
-    while (str.length < 4) {
-      str = `0${str}`
-    }
-
-    return `#${str}`
-  }
 
   const checkClaim = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,7 +45,7 @@ const Page = () => {
   const totalClaimedCount = useMemo(() => populatedTokens.reduce((prev, curr) => prev + (curr.isClaimed ? 1 : 0), 0), [populatedTokens])
 
   return (
-    <main className='min-h-screen mb-12 px-4 flex flex-col items-center'>
+    <main className={`min-h-screen mb-12 px-4 flex flex-col items-center ${antonio.className}`}>
       <div className='flex'>
         {['common', 'rare', 'super_rare', 'mythic'].map((rarity) => (
           <div key={rarity} className='mx-2 sm:mx-4'>
@@ -67,7 +58,7 @@ const Page = () => {
               priority
               unoptimized
             />
-            <div className={`mt-2 text-center text-sm sm:text-xl font-normal ${antonio.className}`}>{rarity.toUpperCase().replaceAll('_', ' ')}</div>
+            <div className='mt-2 text-center text-sm sm:text-xl'>{rarity.toUpperCase().replaceAll('_', ' ')}</div>
           </div>
         ))}
       </div>
@@ -80,21 +71,21 @@ const Page = () => {
         <div className='w-full mt-8 sm:mt-12 p-8 sm:p-12 text-center border border-sky-500 bg-stone-950'>
           <p className={`text-4xl sm:text-6xl font-normal ${imbue.className}`}>THE MALLARD ORDER COMIC ISSUE ONE</p>
 
-          <p className={`my-5 sm:my-10 text-xl sm:text-3xl ${antonio.className}`}>
+          <p className='my-5 sm:my-10 text-xl sm:text-3xl'>
             ISSUE ONE MUST BE <span className='text-yellow-400'>LEVEL 2</span> TO UNLOCK REDEMPTION
           </p>
 
           <button
             type='button'
             disabled={true}
-            className={`py-2 px-4 sm:py-4 sm:px-8 text-lg sm:text-2xl rounded-lg border border-sky-500 bg-gradient-to-b from-[#0081AA] to-[#00121C] disabled:opacity-40 disabled:cursor-not-allowed ${antonio.className}`}
+            className='py-2 px-4 sm:py-4 sm:px-8 text-lg sm:text-2xl rounded-lg border border-sky-500 bg-gradient-to-b from-[#0081AA] to-[#00121C] disabled:opacity-40 disabled:cursor-not-allowed'
           >
             REDEMPTION COMING SOON
           </button>
 
           {/* <Link
             href='/redeem'
-            className={`py-2 px-4 sm:py-4 sm:px-8 text-lg sm:text-2xl rounded-lg border border-sky-500 bg-gradient-to-b from-[#0081AA] to-[#00121C] hover:bg-gradient-to-b hover:from-[#009FD1] hover:to-[#00121C] ${antonio.className}`}
+            className='py-2 px-4 sm:py-4 sm:px-8 text-lg sm:text-2xl rounded-lg border border-sky-500 bg-gradient-to-b from-[#0081AA] to-[#00121C] hover:bg-gradient-to-b hover:from-[#009FD1] hover:to-[#00121C]'
           >
             REDEEM YOUR COPY
           </Link> */}
@@ -103,7 +94,7 @@ const Page = () => {
         <div className='w-full mt-8 sm:mt-12 p-8 sm:p-10 text-center border border-sky-500 bg-gradient-to-b from-[#430000] to-[#110000]'>
           <p className={`text-4xl sm:text-6xl font-normal ${imbue.className}`}>CHECK FOR PHYSICAL REDEMPTION</p>
 
-          <form onSubmit={checkClaim} className={`w-full mt-4 sm:mt-8 flex items-end justify-center text-lg sm:text-2xl ${antonio.className}`}>
+          <form onSubmit={checkClaim} className='w-full mt-4 sm:mt-8 flex items-end justify-center text-lg sm:text-2xl'>
             <div className='w-2/3 mr-4'>
               <p className='mb-2 sm:mb-4'>SERIAL #:</p>
               <input
@@ -127,14 +118,14 @@ const Page = () => {
               <button
                 type='submit'
                 disabled={!serialToCheck || loading}
-                className={`py-2 px-4 sm:py-4 sm:px-8 rounded-lg border border-transparent bg-red-900 disabled:opacity-40 disabled:cursor-not-allowed ${antonio.className}`}
+                className='py-2 px-4 sm:py-4 sm:px-8 rounded-lg border border-transparent bg-red-900 disabled:opacity-40 disabled:cursor-not-allowed'
               >
                 CHECK
               </button>
             )}
           </form>
 
-          <div className={`mt-4 sm:mt-8 flex flex-wrap justify-center ${antonio.className}`}>
+          <div className='mt-4 sm:mt-8 flex flex-wrap justify-center'>
             {checkedClaims.map((item, idx) => (
               <div
                 key={`claim-status-${idx}`}
@@ -151,9 +142,7 @@ const Page = () => {
           </div>
         </div>
 
-        <div
-          className={`w-full mt-8 sm:mt-12 p-4 sm:p-10 flex flex-wrap items-center justify-evenly text-center rounded-lg border border-sky-500 bg-gradient-to-b from-[#0E2637] to-[#101010] ${antonio.className}`}
-        >
+        <div className='w-full mt-8 sm:mt-12 p-4 sm:p-10 flex flex-wrap items-center justify-evenly text-center rounded-lg border border-sky-500 bg-gradient-to-b from-[#0E2637] to-[#101010]'>
           <div className='m-4 flex flex-col items-center'>
             <span className='text-xl sm:text-2xl whitespace-nowrap'>MY CLAIMED PHYSICALS</span>
             <div className='w-[111%] h-[1px] my-2 bg-white rounded-full' />
