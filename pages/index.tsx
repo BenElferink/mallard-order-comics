@@ -93,7 +93,7 @@ const Page = () => {
             disabled={true}
             className='py-2 px-4 sm:py-4 sm:px-8 text-lg sm:text-2xl rounded-lg border border-sky-500 bg-gradient-to-b from-[#0081AA] to-[#00121C] disabled:opacity-40 disabled:cursor-not-allowed'
           >
-            REDEMPTION COMING SOON
+            COMING SOON
           </button>
 
           {/* <Link
