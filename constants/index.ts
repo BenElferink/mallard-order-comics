@@ -17,15 +17,12 @@ export const POLICY_IDS = {
 
 export const ALLOWED_POLICIES = [POLICY_IDS['COMICS_ISSUE_ONE']]
 
-// local storage
-export const LS_KEYS = {
-  WALLET_PROVIDER: 'WALLET_PROVIDER',
-}
-
-export const JPG_STAKE_KEY = 'stake1uxqh9rn76n8nynsnyvf4ulndjv0srcc8jtvumut3989cqmgjt49h6'
-
 export const LINKS = {
   WEBSITE: 'https://mallardorder.io',
   X: 'https://x.com/mallardorder',
   DISCORD: 'https://discord.gg/mallardorder',
+}
+
+export const LOCAL_STORAGE_KEYS = {
+  WALLET_PROVIDER: 'WALLET_PROVIDER',
 }

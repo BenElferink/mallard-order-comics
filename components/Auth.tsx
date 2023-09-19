@@ -7,7 +7,7 @@ import { useData } from '@/contexts/DataContext'
 import truncateStringInMiddle from '@/functions/truncateStringInMiddle'
 import StarIcon from '@/icons/Star'
 import Modal from './Modal'
-import { LS_KEYS } from '@/constants'
+import { LOCAL_STORAGE_KEYS } from '@/constants'
 
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 const inter = Inter({ weight: '300', subsets: ['latin'] })
@@ -23,14 +23,14 @@ const Auth = () => {
     if (!mountRef.current) {
       mountRef.current = true
 
-      const lsValue = localStorage.getItem(LS_KEYS['WALLET_PROVIDER'])
+      const lsValue = localStorage.getItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'])
       if (lsValue) connect(lsValue)
     } else {
       if (connected) {
-        localStorage.setItem(LS_KEYS['WALLET_PROVIDER'], name)
+        localStorage.setItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'], name)
         toggleConnectModal(false)
       } else {
-        localStorage.removeItem(LS_KEYS['WALLET_PROVIDER'])
+        localStorage.removeItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'])
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
