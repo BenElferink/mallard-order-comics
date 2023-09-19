@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Antonio, Imbue } from 'next/font/google'
-import { useAuth } from '@/contexts/AuthContext'
+import { useData } from '@/contexts/DataContext'
 import getTokenSerialNumberPoints from '@/functions/getTokenSerialNumberPoints'
 import Auth from '@/components/Auth'
 import Loader from '@/components/Loader'
@@ -9,15 +9,13 @@ const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
-  const { populatingWallet, populatedWallet } = useAuth()
+  const { populatingWallet, populatedWallet } = useData()
 
   return (
     <main className='min-h-screen mb-12 px-12 flex flex-col items-center'>
       <h2 className={`mb-8 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>MY INVENTORY</h2>
 
-      {!populatedWallet?.stakeKey ? (
-        <div className='mt-8'>{populatingWallet ? <Loader /> : <Auth />}</div>
-      ) : (
+      {!!populatedWallet?.stakeKey ? (
         <div className='w-full flex flex-col items-center'>
           <div className={`w-full p-8 mb-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl ${antonio.className}`}>
             TOTAL COLLECTOR&apos;S POINTS:{' '}
@@ -47,6 +45,8 @@ const Page = () => {
             })}
           </div>
         </div>
+      ) : (
+        <div className='my-8'>{populatingWallet ? <Loader /> : <Auth />}</div>
       )}
     </main>
   )

@@ -57,6 +57,24 @@ class Api {
         }
       })
     },
+
+    populateData: (tokenId: string): Promise<PopulatedToken> => {
+      const uri = `${this.baseUrl}/token/${tokenId}/populate`
+
+      return new Promise(async (resolve, reject) => {
+        try {
+          console.log('Fetching token:', tokenId)
+
+          const { data } = await axios.get<PopulatedToken>(uri)
+
+          console.log('Fetched token:', data.fingerprint)
+
+          return resolve(data)
+        } catch (error: any) {
+          return await this.handleError(error, reject, async () => await this.token.getData(tokenId))
+        }
+      })
+    },
   }
 
   wallet = {

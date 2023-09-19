@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { MeshProvider } from '@meshsdk/react'
-import { AuthProvider } from '@/contexts/AuthContext'
+import { DataProvider } from '@/contexts/DataContext'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import '@/styles/globals.css'
@@ -22,10 +22,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <Toaster />
 
         <MeshProvider>
-          <AuthProvider>
+          <DataProvider>
             <Header />
             <Component {...pageProps} />
-          </AuthProvider>
+          </DataProvider>
         </MeshProvider>
       </div>
 

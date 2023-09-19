@@ -3,7 +3,7 @@ import { Antonio } from 'next/font/google'
 import { Fragment, useEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 import { useWallet, useWalletList } from '@meshsdk/react'
-import { useAuth } from '@/contexts/AuthContext'
+import { useData } from '@/contexts/DataContext'
 import truncateStringInMiddle from '@/functions/truncateStringInMiddle'
 import StarIcon from '@/icons/Star'
 import Modal from './Modal'
@@ -14,7 +14,7 @@ const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 const Auth = () => {
   const installedWallets = useWalletList()
   const { connect, disconnect, connecting, connected, name, error } = useWallet()
-  const { populatingWallet, populatedWallet, openConnectModal, toggleConnectModal } = useAuth()
+  const { populatingWallet, populatedWallet, openConnectModal, toggleConnectModal } = useData()
 
   const mountRef = useRef(false)
 

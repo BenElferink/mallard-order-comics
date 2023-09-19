@@ -1,20 +1,18 @@
 import { Antonio, Imbue } from 'next/font/google'
 import { useEffect, useMemo, useState } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import Api from '@/utils/api'
+import { useData } from '@/contexts/DataContext'
 import populateLeaderboard from '@/functions/populateLeaderboard'
 import Loader from '@/components/Loader'
-import type { PopulatedToken } from '@/@types'
-import { POLICY_IDS } from '@/constants'
 
-const api = new Api()
 const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
-  const { populatedWallet } = useAuth()
+  const { populatingWallet, populatedWallet, populatingTokens, populatedTokens } = useData()
 
-  const [loading, setLoading] = useState(false)
+  const rowsPerPage = 50
+  const [maxPages, setMaxPages] = useState(1)
+  const [page, setPage] = useState(1)
   const [leaderboard, setLeaderboard] = useState<
     {
       walletId: string
@@ -25,58 +23,48 @@ const Page = () => {
 
   const myIndexOnBoard = useMemo(() => leaderboard.findIndex((row) => row.walletId === populatedWallet?.stakeKey), [leaderboard, populatedWallet])
 
-  const rowsPerPage = 50
-  const [maxPages, setMaxPages] = useState(1)
-  const [page, setPage] = useState(1)
-
   useEffect(() => {
-    setLoading(true)
+    if (populatedTokens.length) {
+      const payload = populateLeaderboard(populatedTokens)
 
-    api.policy
-      .getData(POLICY_IDS['COMICS_ISSUE_ONE'])
-      .then(({ tokens }) => {
-        const payload = populateLeaderboard(tokens as PopulatedToken[])
-
-        setLeaderboard(payload)
-        setMaxPages(Math.ceil(payload.length / rowsPerPage))
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false))
-  }, [])
+      setLeaderboard(payload)
+      setMaxPages(Math.ceil(payload.length / rowsPerPage))
+    }
+  }, [populatedTokens])
 
   return (
     <main className='min-h-screen mb-12 px-12 flex flex-col items-center'>
       <h2 className={`mb-8 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>COLLECTOR&apos;S LEADERBOARD</h2>
 
-      {loading ? (
-        <div className='mt-8'>
-          <Loader />
-        </div>
-      ) : (
-        <div className='max-w-[900px] w-full flex flex-col items-center'>
-          {populatedWallet ? (
-            <table className='w-full mb-8 border-separate border-spacing-0 border rounded-lg bg-sky-950/80'>
-              <thead className='border-b-2'>
-                <tr>
-                  <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR PLACE</th>
-                  <th className={`p-4 border-b-2 text-cyan-400 text-start text-2xl ${antonio.className}`}>YOUR NAME</th>
-                  <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR POINTS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? myIndexOnBoard + 1 : 0}</td>
-                  <td className='py-8 px-4 text-start'>
-                    {myIndexOnBoard !== -1
-                      ? leaderboard[myIndexOnBoard].handle || leaderboard[myIndexOnBoard].walletId
-                      : populatedWallet.handle || populatedWallet.stakeKey}
-                  </td>
-                  <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].points : 0} POINTS</td>
-                </tr>
-              </tbody>
-            </table>
-          ) : null}
+      <div className='max-w-[900px] w-full flex flex-col items-center'>
+        {populatedWallet ? (
+          <table className='w-full mb-8 border-separate border-spacing-0 border rounded-lg bg-sky-950/80'>
+            <thead className='border-b-2'>
+              <tr>
+                <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR PLACE</th>
+                <th className={`p-4 border-b-2 text-cyan-400 text-start text-2xl ${antonio.className}`}>YOUR NAME</th>
+                <th className={`p-4 border-b-2 text-cyan-400 text-center text-2xl ${antonio.className}`}>YOUR POINTS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? myIndexOnBoard + 1 : 0}</td>
+                <td className='py-8 px-4 text-start'>
+                  {myIndexOnBoard !== -1
+                    ? leaderboard[myIndexOnBoard].handle || leaderboard[myIndexOnBoard].walletId
+                    : populatedWallet.handle || populatedWallet.stakeKey}
+                </td>
+                <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? leaderboard[myIndexOnBoard].points : 0} POINTS</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : populatingWallet ? (
+          <div className='my-8'>
+            <Loader />
+          </div>
+        ) : null}
 
+        {leaderboard.length ? (
           <table className='w-full border-separate border-spacing-0 border border-sky-500 rounded-lg bg-gray-950/80'>
             <thead className='border-b-2 border-b-sky-500'>
               <tr>
@@ -120,8 +108,12 @@ const Page = () => {
               </tr>
             </tbody>
           </table>
-        </div>
-      )}
+        ) : populatingTokens ? (
+          <div className='my-8'>
+            <Loader />
+          </div>
+        ) : null}
+      </div>
     </main>
   )
 }

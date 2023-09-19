@@ -2,13 +2,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Antonio } from 'next/font/google'
 import { Fragment } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
+import { useData } from '@/contexts/DataContext'
 import Auth from './Auth'
 
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 
 const Header = () => {
-  const { populatedWallet } = useAuth()
+  const { populatedWallet } = useData()
 
   return (
     <header id='header' className='pt-8 sm:pt-20 pb-20 px-4 sm:px-12 flex items-start justify-between'>

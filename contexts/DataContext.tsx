@@ -2,28 +2,33 @@ import { PropsWithChildren, createContext, useCallback, useContext, useEffect, u
 import { toast } from 'react-hot-toast'
 import { useWallet } from '@meshsdk/react'
 import Api from '@/utils/api'
-import type { PopulatedWallet } from '@/@types'
+import type { PopulatedToken, PopulatedWallet } from '@/@types'
+import { POLICY_IDS } from '@/constants'
 
-interface AuthContext {
-  populatingWallet: boolean
-  populatedWallet: PopulatedWallet | null
+interface DataContext {
   openConnectModal: boolean
   toggleConnectModal: (bool?: boolean) => void
+  populatingWallet: boolean
+  populatedWallet: PopulatedWallet | null
+  populatingTokens: boolean
+  populatedTokens: PopulatedToken[]
 }
 
-const initContext: AuthContext = {
-  populatingWallet: false,
-  populatedWallet: null,
+const initContext: DataContext = {
   openConnectModal: false,
   toggleConnectModal: () => {},
+  populatingWallet: false,
+  populatedWallet: null,
+  populatingTokens: false,
+  populatedTokens: [],
 }
 
 const api = new Api()
-const AuthContext = createContext(initContext)
+const DataContext = createContext(initContext)
 
-export const useAuth = () => useContext(AuthContext)
+export const useData = () => useContext(DataContext)
 
-export const AuthProvider = (props: PropsWithChildren) => {
+export const DataProvider = (props: PropsWithChildren) => {
   const { children } = props
   const { connected, name, wallet, disconnect } = useWallet()
 
@@ -73,16 +78,31 @@ export const AuthProvider = (props: PropsWithChildren) => {
     }
   }, [connected, populate, name])
 
+  const [populatingTokens, setPopulatingTokens] = useState(false)
+  const [populatedTokens, setPopulatedTokens] = useState<PopulatedToken[]>([])
+
+  useEffect(() => {
+    setPopulatingTokens(true)
+
+    api.policy
+      .getData(POLICY_IDS['COMICS_ISSUE_ONE'])
+      .then(({ tokens }) => setPopulatedTokens(tokens as PopulatedToken[]))
+      .catch((error) => console.error(error))
+      .finally(() => setPopulatingTokens(false))
+  }, [])
+
   return (
-    <AuthContext.Provider
+    <DataContext.Provider
       value={{
-        populatingWallet,
-        populatedWallet,
         openConnectModal,
         toggleConnectModal,
+        populatingWallet,
+        populatedWallet,
+        populatingTokens,
+        populatedTokens,
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </DataContext.Provider>
   )
 }
