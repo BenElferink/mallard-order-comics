@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<WalletResponse>
 
         console.log('Fetched tokens:', fetchedTokens.length)
 
-        const api = new Api('http://localhost:3000')
+        const api = new Api(process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://mallard-order-comics.vercel.app')
         const populatedTokens = await Promise.all(fetchedTokens.map(({ unit }) => api.token.getData(unit)) || [])
 
         const wallet: PopulatedWallet = {
