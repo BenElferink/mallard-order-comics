@@ -13,7 +13,7 @@ const Page = () => {
 
   return (
     <main className={`min-h-screen mb-12 px-12 flex flex-col items-center ${antonio.className}`}>
-      <h2 className={`mb-8 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>MY INVENTORY</h2>
+      <h2 className={`mb-8 text-center text-4xl sm:text-6xl ${imbue.className}`}>MY INVENTORY</h2>
 
       {!!populatedWallet?.stakeKey ? (
         <div className='w-full flex flex-col items-center'>

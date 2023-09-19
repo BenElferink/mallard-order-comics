@@ -34,7 +34,7 @@ const Page = () => {
 
   return (
     <main className='min-h-screen mb-12 px-12 flex flex-col items-center'>
-      <h2 className={`mb-8 text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>COLLECTOR&apos;S LEADERBOARD</h2>
+      <h2 className={`mb-8 text-center text-4xl sm:text-6xl ${imbue.className}`}>COLLECTOR&apos;S LEADERBOARD</h2>
 
       <div className='max-w-[900px] w-full flex flex-col items-center'>
         {populatedWallet ? (
@@ -97,7 +97,7 @@ const Page = () => {
                         <button
                           key={`page-${thisPage}`}
                           onClick={() => setPage(thisPage)}
-                          className={`mx-2 font-normal text-xl ${page === thisPage ? 'text-red-600' : ''} ${antonio.className}`}
+                          className={`mx-2 text-xl ${page === thisPage ? 'text-red-600' : ''} ${antonio.className}`}
                         >
                           {thisPage}
                         </button>

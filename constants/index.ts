@@ -23,3 +23,9 @@ export const LS_KEYS = {
 }
 
 export const JPG_STAKE_KEY = 'stake1uxqh9rn76n8nynsnyvf4ulndjv0srcc8jtvumut3989cqmgjt49h6'
+
+export const LINKS = {
+  WEBSITE: 'https://mallardorder.io',
+  X: 'https://x.com/mallardorder',
+  DISCORD: 'https://discord.gg/mallardorder',
+}

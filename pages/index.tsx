@@ -8,6 +8,7 @@ import formatHex from '@/functions/formatHex'
 import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import Loader from '@/components/Loader'
 import { POLICY_IDS } from '@/constants'
+import toast from 'react-hot-toast'
 
 const api = new Api()
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
@@ -21,23 +22,35 @@ const Page = () => {
 
   const checkClaim = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setLoading(true)
 
     const serial = Number(serialToCheck)
+    const alreadyChecked = !!checkedClaims.find((item) => item.serial === serial)
 
-    try {
-      const policyId = POLICY_IDS['COMICS_ISSUE_ONE']
-      const cip68NftPrefix = '000de140'
-      const tokenName = formatHex.toHex(`TMO Comics - Issue One ${getSerialStringFromSerialNumber(serial)}`)
+    if (alreadyChecked) {
+      toast.error('ALREADY CHECKED')
+    } else {
+      try {
+        setLoading(true)
 
-      const token = await api.token.populateData(`${policyId}${cip68NftPrefix}${tokenName}`)
+        const policyId = POLICY_IDS['COMICS_ISSUE_ONE']
+        const cip68NftPrefix = '000de140'
+        const tokenName = formatHex.toHex(`TMO Comics - Issue One ${getSerialStringFromSerialNumber(serial)}`)
 
-      setCheckedClaims((prev) => [...prev, { serial, claimed: token.isClaimed }])
-      setSerialToCheck('')
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
+        const token = await api.token.populateData(`${policyId}${cip68NftPrefix}${tokenName}`)
+
+        setSerialToCheck('')
+        setCheckedClaims((prev) => {
+          const payload = [...prev]
+
+          payload.push({ serial, claimed: token.isClaimed })
+
+          return payload.sort((a, b) => a.serial - b.serial)
+        })
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
@@ -64,14 +77,14 @@ const Page = () => {
       </div>
 
       <div className='mt-8 sm:mt-12'>
-        <p className={`text-center text-4xl sm:text-6xl font-normal ${imbue.className}`}>GAIN POINTS FOR COLLECTING EDITIONS OF TMO COMICS!</p>
+        <p className={`text-center text-4xl sm:text-6xl ${imbue.className}`}>GAIN POINTS FOR COLLECTING EDITIONS OF TMO COMICS!</p>
       </div>
 
       <div className='max-w-[750px] mt-8 sm:mt-12'>
         <div className='w-full mt-8 sm:mt-12 p-8 sm:p-12 text-center border border-sky-500 bg-stone-950'>
-          <p className={`text-4xl sm:text-6xl font-normal ${imbue.className}`}>THE MALLARD ORDER COMIC ISSUE ONE</p>
+          <p className={`text-4xl sm:text-6xl ${imbue.className}`}>THE MALLARD ORDER COMIC ISSUE ONE</p>
 
-          <p className='my-5 sm:my-10 text-xl sm:text-3xl'>
+          <p className='my-6 sm:my-12 text-xl sm:text-3xl'>
             ISSUE ONE MUST BE <span className='text-yellow-400'>LEVEL 2</span> TO UNLOCK REDEMPTION
           </p>
 
@@ -92,9 +105,9 @@ const Page = () => {
         </div>
 
         <div className='w-full mt-8 sm:mt-12 p-8 sm:p-10 text-center border border-sky-500 bg-gradient-to-b from-[#430000] to-[#110000]'>
-          <p className={`text-4xl sm:text-6xl font-normal ${imbue.className}`}>CHECK FOR PHYSICAL REDEMPTION</p>
+          <p className={`text-4xl sm:text-6xl ${imbue.className}`}>CHECK FOR PHYSICAL REDEMPTION</p>
 
-          <form onSubmit={checkClaim} className='w-full mt-4 sm:mt-8 flex items-end justify-center text-lg sm:text-2xl'>
+          <form onSubmit={checkClaim} className='w-full mt-6 sm:mt-8 flex items-end justify-center text-lg sm:text-2xl'>
             <div className='w-2/3 mr-4'>
               <p className='mb-2 sm:mb-4'>SERIAL #:</p>
               <input
@@ -125,12 +138,12 @@ const Page = () => {
             )}
           </form>
 
-          <div className='mt-4 sm:mt-8 flex flex-wrap justify-center'>
+          <div className='mt-6 sm:mt-8 flex flex-wrap justify-center'>
             {checkedClaims.map((item, idx) => (
               <div
                 key={`claim-status-${idx}`}
                 className={
-                  'w-[85px] m-1 py-1 flex flex-col items-center text-sm sm:text-unset rounded-lg border bg-gradient-to-b ' +
+                  'w-[85px] m-1 py-1 flex flex-col items-center rounded-lg border bg-gradient-to-b ' +
                   (item.claimed ? 'border-sky-900 from-[#05445F] to-black' : 'border-red-800 from-[#531010] to-black')
                 }
               >
