@@ -1,8 +1,8 @@
 import blockfrost from '@/utils/blockfrost'
 import formatHex from './formatHex'
-import formatIpfsReference from './formatIpfsReference'
 import type { Address, PopulatedToken, StakeKey, TokenId } from '@/@types'
 import adaHandle from '@/utils/adaHandle'
+import saturnNft from '@/utils/saturnNft'
 
 const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
   try {
@@ -81,6 +81,8 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
     let ownerHandle = ''
     if (owner.indexOf('stake1') === 0) ownerHandle = await adaHandle.resolveWalletHandle(owner)
 
+    const level = await saturnNft.getLevel(serialNumber)
+
     const payload: PopulatedToken = {
       policyId,
       tokenId,
@@ -91,7 +93,7 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
       ownerHandle,
 
       serialNumber,
-      level: 0,
+      level,
       coverVariant,
       isClaimed,
     }
