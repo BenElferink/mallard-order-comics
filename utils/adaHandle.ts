@@ -100,12 +100,11 @@ class AdaHandle {
 
           if (holder !== stakeKey) {
             console.log('Resolved with incorrect wallet handle:', handle)
-
             return resolve('')
           }
-        }
 
-        handle = `$${handle}`
+          handle = `$${handle}`
+        }
 
         console.log('Resolved wallet handle:', handle)
 
