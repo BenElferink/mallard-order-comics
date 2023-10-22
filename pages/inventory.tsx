@@ -49,7 +49,7 @@ const Page = () => {
                 <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
                   <div className='p-8 flex items-center justify-center'>
                     <Image
-                      src={`/media/cover_varients/${coverVariant.toLowerCase().replaceAll(' ', '_')}.jpeg`}
+                      src={`/media/cover_varients/${coverVariant.toLowerCase().replaceAll(' ', '_')}.webp`}
                       alt={coverVariant}
                       width={100}
                       height={160}

@@ -63,7 +63,7 @@ const Page = () => {
         {['common', 'rare', 'super_rare', 'mythic'].map((rarity) => (
           <div key={rarity} className='mx-2 sm:mx-4'>
             <Image
-              src={`/media/cover_varients/${rarity}.jpeg`}
+              src={`/media/cover_varients/${rarity}.webp`}
               alt={rarity}
               width={220}
               height={340}
