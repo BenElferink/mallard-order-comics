@@ -1,3 +1,4 @@
-## A webapp for The Mallard Order project.
+# The Mallard Order - Comics.
 
-- [Figma design](https://www.figma.com/file/tj5eRZzOoB3WimzN3GTiIB/TMO-Comics-Platform-for-Dev?type=design&mode=dev)
+- [Figma](https://www.figma.com/file/tj5eRZzOoB3WimzN3GTiIB/TMO-Comics-Platform-for-Dev?type=design&mode=dev)
+- [Website](https://comics.mallardorder.io/)
