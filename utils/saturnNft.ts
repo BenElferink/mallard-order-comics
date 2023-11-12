@@ -1,17 +1,73 @@
 import axios from 'axios'
-import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import { API_KEYS } from '@/constants'
+import { PolicyId } from '@/@types'
 
 class SaturnNft {
   baseUrl: string
+  projectId: string
 
   constructor() {
     this.baseUrl = 'https://api.saturnnft.io/graphql'
+    this.projectId = '9267b11c-dcb8-4298-8365-efdf29bc0d4e'
   }
+
+  getProject = (
+    policyId: PolicyId
+  ): Promise<{
+    projectId: string
+    accountId: string
+    plutusScriptId: string
+  }> =>
+    new Promise(async (resolve, reject) => {
+      try {
+        console.log('Fetching project from Saturn:', policyId)
+
+        const { data } = await axios.post<{
+          data: {
+            publicNFTProjects: {
+              nodes: {
+                id: string
+                account_id: string
+                plutus_script_id: string
+              }[]
+            }
+          }
+        }>(
+          this.baseUrl,
+          {
+            query:
+              'query PublicNFTProjects($where: NFTProjectFilterInput) { publicNFTProjects(where: $where) { nodes { id account_id plutus_script_id } } }',
+            variables: {
+              where: {
+                policy_id: { eq: policyId },
+              },
+            },
+            operationName: 'PublicNFTProjects',
+          },
+          {
+            headers: {
+              'Accept-Encoding': 'application/json',
+              Authorization: `Bearer ${API_KEYS['SATURN_API_KEY']}`,
+            },
+          }
+        )
+
+        const payload = data.data.publicNFTProjects.nodes.map((item) => ({
+          projectId: item.id,
+          accountId: item.account_id,
+          plutusScriptId: item.plutus_script_id,
+        }))[0]
+
+        console.log('Fetched project from Saturn:', payload)
+
+        return resolve(payload)
+      } catch (error: any) {
+        return reject(error)
+      }
+    })
 
   getLevel = (serialNumber: number): Promise<number> => {
     const uri = this.baseUrl
-    const comicIssueOneProjectId = '9267b11c-dcb8-4298-8365-efdf29bc0d4e'
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -22,6 +78,7 @@ class SaturnNft {
             publicNFTs: {
               edges: {
                 node: {
+                  id: string
                   collection_id: number
                   nft_data: {
                     name: string
@@ -36,13 +93,13 @@ class SaturnNft {
           uri,
           {
             query:
-              '\n query PublicNFTs($input: GetPublicNFTsInput!, $where: NFTFilterInput) {\n publicNFTs(input: $input, where: $where ) {\n edges {\n node {\n collection_id\n nft_data {\n name\n max_level\n }\n }\n }\n totalCount\n }\n }\n ',
+              'query PublicNFTs($input: GetPublicNFTsInput!, $where: NFTFilterInput) { publicNFTs(input: $input, where: $where ) { edges { node { id collection_id nft_data { max_level } upgrade_nfts { id upgrade_level { id level } } } } } }',
             variables: {
               input: {
-                nftProjectId: comicIssueOneProjectId,
+                nftProjectId: this.projectId,
               },
               where: {
-                asset_name: { eq: `TMO Comics - Issue One ${getSerialStringFromSerialNumber(serialNumber)}` },
+                collection_id: { eq: serialNumber },
               },
             },
             operationName: 'PublicNFTs',
