@@ -81,7 +81,14 @@ const populateToken = async (tokenId: TokenId): Promise<PopulatedToken> => {
     let ownerHandle = ''
     if (owner.indexOf('stake1') === 0) ownerHandle = await adaHandle.resolveWalletHandle(owner)
 
-    const level = await saturnNft.getLevel(serialNumber)
+    let level: number
+
+    try {
+      level = await saturnNft.getLevel(serialNumber)
+    } catch (error: any) {
+      console.error(error?.message || error?.toString())
+      level = 0
+    }
 
     const payload: PopulatedToken = {
       policyId,
