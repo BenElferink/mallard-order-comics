@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Antonio, Imbue } from 'next/font/google'
+import { useState } from 'react'
 import { useData } from '@/contexts/DataContext'
 import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import Auth from '@/components/Auth'
+import Modal from '@/components/Modal'
 import Loader from '@/components/Loader'
 import UpgradeIcon from '@/icons/Upgrade'
 
@@ -12,6 +14,9 @@ const imbue = Imbue({ weight: '300', subsets: ['latin'] })
 
 const Page = () => {
   const { populatingWallet, populatedWallet } = useData()
+  const [openReader, setOpenReader] = useState(false)
+
+  const toggleReader = () => setOpenReader((prev) => !prev)
 
   if (!populatedWallet?.stakeKey) {
     return (
@@ -34,11 +39,12 @@ const Page = () => {
         <thead className={`border-b-2 border-b-sky-500 ${antonio.className}`}>
           <tr>
             <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>ISSUE #</th>
-            <th className='pl-12 py-4 border-b-2 border-b-sky-500 text-start text-2xl'>STATS</th>
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>STATS</th>
             <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl flex items-center justify-center'>
               UPGRADE <UpgradeIcon className='w-4 ml-2' />
             </th>
             <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>REDEMPTION</th>
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>READ</th>
           </tr>
         </thead>
 
@@ -47,7 +53,7 @@ const Page = () => {
             return (
               <tr key={tokenId}>
                 <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
-                  <div className='p-8 flex items-center justify-center'>
+                  <div className='py-8 px-4 flex flex-wrap items-center justify-center'>
                     <Image
                       src={`/media/cover_varients/${coverVariant.toLowerCase().replaceAll(' ', '_')}.webp`}
                       alt={coverVariant}
@@ -57,12 +63,12 @@ const Page = () => {
                       priority
                       unoptimized
                     />
-                    <span className='ml-8 text-2xl'>{getSerialStringFromSerialNumber(serialNumber)}</span>
+                    <span className='m-4 text-2xl'>{getSerialStringFromSerialNumber(serialNumber)}</span>
                   </div>
                 </td>
 
                 <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
-                  <div className='p-8 flex flex-col justify-center'>
+                  <div className='py-8 px-4 flex flex-col justify-center'>
                     <div className='py-2 flex items-center'>
                       <span className='text-sky-500 text-4xl mx-4'>&bull;</span>
                       <p>RARITY: {coverVariant.toUpperCase()}</p>
@@ -87,7 +93,7 @@ const Page = () => {
                 </td>
 
                 <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
-                  <div className='p-8 flex items-center justify-center'>
+                  <div className='py-8 px-4 flex items-center justify-center'>
                     <button
                       type='button'
                       disabled={true}
@@ -98,7 +104,7 @@ const Page = () => {
 
                     {/* <button
                       type='button'
-                      disabled={level < 2}
+                      disabled={level !== 2}
                       className='w-32 py-2 text-center text-xl rounded-lg border bg-gradient-to-b from-[#003E3A] to-[#001027] hover:bg-gradient-to-b hover:from-[#005E3A] hover:to-[#001027] disabled:opacity-40 disabled:cursor-not-allowed'
                     >
                       LEVEL UP
@@ -107,7 +113,7 @@ const Page = () => {
                 </td>
 
                 <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
-                  <div className='p-8 flex items-center justify-center'>
+                  <div className='py-8 px-4 flex items-center justify-center'>
                     {isClaimed ? (
                       <div className='w-32 py-2 text-center text-xl rounded-lg bg-green-700'>CLAIMED</div>
                     ) : level < 2 ? (
@@ -122,11 +128,27 @@ const Page = () => {
                     )}
                   </div>
                 </td>
+
+                <td className={idx === populatedWallet.tokens.length - 1 ? '' : 'border-b-2 border-b-sky-500'}>
+                  <div className='py-8 px-4 flex items-center justify-center'>
+                    <button
+                      type='button'
+                      onClick={toggleReader}
+                      className='w-32 py-2 text-center text-xl rounded-lg border bg-gradient-to-b from-[#003E3A] to-[#001027] hover:bg-gradient-to-b hover:from-[#005E3A] hover:to-[#001027] disabled:opacity-40 disabled:cursor-not-allowed'
+                    >
+                      READ
+                    </button>
+                  </div>
+                </td>
               </tr>
             )
           })}
         </tbody>
       </table>
+
+      <Modal open={openReader} onClose={toggleReader}>
+        <iframe allowFullScreen src='https://heyzine.com/flip-book/484669daa8.html' className='w-[80vw] h-[80vh] m-4 rounded-xl' />
+      </Modal>
     </main>
   )
 }
