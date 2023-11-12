@@ -77,7 +77,7 @@ const Page = () => {
                       <span className='text-sky-500 text-4xl mx-4'>&bull;</span>
                       <p>
                         CLAIM STATUS: {isClaimed ? <span className='text-green-500'>CLAIMED</span> : <span className='text-red-600'>UNCLAIMED</span>}
-                        {level < 2 ? <span className='text-sky-500'> (MUST BE LEVEL 2)</span> : null}
+                        {level === 1 ? <span className='text-sky-500'> (MUST BE LEVEL 2)</span> : null}
                       </p>
                     </div>
                     <div className='py-2 flex items-center'>
@@ -104,7 +104,7 @@ const Page = () => {
 
                     {/* <button
                       type='button'
-                      disabled={level !== 2}
+                      disabled={level !== 1}
                       className='w-32 py-2 text-center text-xl rounded-lg border bg-gradient-to-b from-[#003E3A] to-[#001027] hover:bg-gradient-to-b hover:from-[#005E3A] hover:to-[#001027] disabled:opacity-40 disabled:cursor-not-allowed'
                     >
                       LEVEL UP
