@@ -5,6 +5,13 @@ import splitTokenId from '@/functions/splitTokenId'
 import type { PolicyId, TokenId } from '@/@types'
 import { ALLOWED_POLICIES } from '@/constants'
 
+export const config = {
+  maxDuration: 300,
+  api: {
+    responseLimit: false,
+  },
+}
+
 export interface PolicyPopulateResponse {
   policyId: PolicyId
   count: number

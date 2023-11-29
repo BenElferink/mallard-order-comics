@@ -3,6 +3,7 @@ import { firestore } from '@/utils/firebase'
 import type { PolicyId, PopulatedToken } from '@/@types'
 
 export const config = {
+  maxDuration: 300,
   api: {
     responseLimit: false,
   },

@@ -5,6 +5,7 @@ import populateToken from '@/functions/populateToken'
 import type { TokenId } from '@/@types'
 
 export const config = {
+  maxDuration: 300,
   api: {
     responseLimit: false,
   },

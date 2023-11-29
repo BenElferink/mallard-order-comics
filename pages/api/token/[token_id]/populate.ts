@@ -4,6 +4,13 @@ import populateToken from '@/functions/populateToken'
 import comicsIssueOne from '@/data/87c3a08adde0c1634e982ef6edce75dff2ac92aae34481070a59d9f2.json'
 import type { PopulatedToken } from '@/@types'
 
+export const config = {
+  maxDuration: 300,
+  api: {
+    responseLimit: false,
+  },
+}
+
 export interface TokenPopulateResponse extends PopulatedToken {}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<TokenPopulateResponse>) => {
