@@ -5,8 +5,9 @@ import { toast } from 'react-hot-toast'
 import { useWallet, useWalletList } from '@meshsdk/react'
 import { useData } from '@/contexts/DataContext'
 import truncateStringInMiddle from '@/functions/truncateStringInMiddle'
-import StarIcon from '@/icons/Star'
 import Modal from './Modal'
+import StarIcon from '@/icons/Star'
+import { WalletIcon } from '@heroicons/react/24/solid'
 import { LOCAL_STORAGE_KEYS } from '@/constants'
 
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
@@ -15,7 +16,7 @@ const inter = Inter({ weight: '300', subsets: ['latin'] })
 const Auth = () => {
   const installedWallets = useWalletList()
   const { connect, disconnect, connecting, connected, name, error } = useWallet()
-  const { populatingWallet, populatedWallet, openConnectModal, toggleConnectModal } = useData()
+  const { populatedWallet, openConnectModal, toggleConnectModal } = useData()
 
   const mountRef = useRef(false)
 
@@ -39,13 +40,13 @@ const Auth = () => {
   return (
     <Fragment>
       <div className={`flex flex-col ${antonio.className}`}>
-        <button
-          type='button'
-          disabled={openConnectModal}
-          onClick={() => toggleConnectModal(true)}
-          className={`w-[220px] m-1 p-3 flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
-        >
-          {connected ? (
+        {connected ? (
+          <button
+            type='button'
+            disabled={openConnectModal}
+            onClick={() => toggleConnectModal(true)}
+            className={`w-[220px] m-1 p-3 flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
+          >
             <Image
               src={installedWallets.find((item) => item.name === name)?.icon || ''}
               alt={name}
@@ -55,14 +56,33 @@ const Auth = () => {
               priority
               unoptimized
             />
-          ) : null}
 
-          {connected && !!populatedWallet
-            ? populatedWallet.handle || truncateStringInMiddle(populatedWallet.stakeKey, 7)
-            : connecting || populatingWallet
-            ? 'CONNECTING...'
-            : 'CONNECT WALLET'}
-        </button>
+            {!!populatedWallet ? populatedWallet.handle || truncateStringInMiddle(populatedWallet.stakeKey, 7) : 'CONNECTING...'}
+          </button>
+        ) : (
+          <Fragment>
+            <button
+              type='button'
+              disabled={openConnectModal}
+              onClick={() => toggleConnectModal(true)}
+              className={`w-[220px] m-1 p-3 hidden sm:flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
+            >
+              CONNECT WALLET
+            </button>
+
+            <div className='sm:hidden flex flex-col items-center justify-center'>
+              <button
+                type='button'
+                disabled={openConnectModal}
+                onClick={() => toggleConnectModal(true)}
+                className={`mb-2 p-4 rounded-full border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 to-teal-950 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
+              >
+                <WalletIcon className='w-12 h-12' />
+              </button>
+              CONNECT WALLET
+            </div>
+          </Fragment>
+        )}
 
         {connected && !!populatedWallet ? (
           <div className='w-[220px] m-1 p-3 flex items-center justify-center rounded-lg border border-transparent bg-red-800'>
@@ -95,12 +115,12 @@ const Auth = () => {
           </div>
         ) : (
           <div className={`sm:px-8 mx-auto text-center ${antonio.className}`}>
-            <h2 className='mb-8 text-xl'>CONNECT YOUR WALLET</h2>
+            <h2 className='mb-4 text-xl'>CONNECT YOUR WALLET</h2>
 
             {/* @ts-ignore */}
             {error ? <p className='text-red-400'>{error?.message || error?.toString()}</p> : null}
 
-            <div className='max-w-[420px] mx-auto flex flex-wrap items-center justify-center'>
+            <div className='max-w-[420px] mt-4 mx-auto flex flex-wrap items-center justify-center'>
               {installedWallets.map((item) => {
                 const walletName = item.name.toUpperCase().replace('WALLET', '').trim()
 
@@ -109,7 +129,7 @@ const Auth = () => {
                     key={item.name}
                     onClick={() => connect(item.name)}
                     disabled={connected || connecting}
-                    className={`w-[200px] m-1 p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed ${inter.className}`}
+                    className={`w-full sm:w-[200px] m-1 p-4 sm:p-2 flex items-center rounded-lg border border-transparent hover:border-zinc-400 focus:border-zinc-400 disabled:border-transparent bg-red-600/40 sm:bg-zinc-800 hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed ${inter.className}`}
                   >
                     <Image
                       src={item.icon}

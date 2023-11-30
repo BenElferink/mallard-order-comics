@@ -7,7 +7,7 @@ import { LINKS } from '@/constants'
 
 const Footer = () => {
   return (
-    <footer className='py-8 flex flex-col items-center justify-center bg-black'>
+    <footer className='mt-20 py-8 flex flex-col items-center justify-center bg-black'>
       <div className='mb-4'>
         <Image src='/media/logo.png' alt='logo' priority unoptimized width={130} height={130} />
       </div>

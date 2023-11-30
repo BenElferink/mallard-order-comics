@@ -33,7 +33,7 @@ const Page = () => {
   }, [populatedTokens])
 
   return (
-    <main className='min-h-screen mb-12 px-12 flex flex-col items-center'>
+    <main className='min-h-screen p-4 flex flex-col items-center'>
       <h2 className={`mb-8 text-center text-4xl sm:text-6xl ${imbue.className}`}>COLLECTOR&apos;S LEADERBOARD</h2>
 
       <div className='max-w-[900px] w-full flex flex-col items-center'>
@@ -49,7 +49,7 @@ const Page = () => {
             <tbody>
               <tr>
                 <td className='py-8 px-4 text-center'>{myIndexOnBoard !== -1 ? myIndexOnBoard + 1 : 0}</td>
-                <td className='py-8 px-4 text-start'>
+                <td className='py-8 px-4 text-start break-all'>
                   {myIndexOnBoard !== -1
                     ? leaderboard[myIndexOnBoard].handle || leaderboard[myIndexOnBoard].walletId
                     : populatedWallet.handle || populatedWallet.stakeKey}
@@ -81,7 +81,7 @@ const Page = () => {
                 return idx >= minRange && idx <= maxRange ? (
                   <tr key={walletId}>
                     <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-center`}>{idx + 1}</td>
-                    <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-start`}>{handle || walletId}</td>
+                    <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-start break-all`}>{handle || walletId}</td>
                     <td className={`py-2 ${idx === minRange ? 'pt-8' : ''} text-center`}>{points} POINTS</td>
                   </tr>
                 ) : null
