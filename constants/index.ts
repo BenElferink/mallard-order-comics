@@ -1,3 +1,5 @@
+import type { CoverVariant } from '@/@types'
+
 export const API_KEYS = {
   BLOCKFROST_API_KEY: process.env.BLOCKFROST_API_KEY || '',
   SATURN_API_KEY: process.env.SATURN_API_KEY || '',
@@ -26,3 +28,5 @@ export const LINKS = {
 export const LOCAL_STORAGE_KEYS = {
   WALLET_PROVIDER: 'WALLET_PROVIDER',
 }
+
+export const COVER_VARIANTS = ['Common', 'Rare', 'Super Rare', 'Mythic'] as CoverVariant[]

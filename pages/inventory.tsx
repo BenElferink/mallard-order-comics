@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { Antonio, Imbue } from 'next/font/google'
+import { Fragment } from 'react'
 import { useData } from '@/contexts/DataContext'
 import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import Auth from '@/components/Auth'
 import Loader from '@/components/Loader'
-import UpgradeIcon from '@/icons/Upgrade'
-import { Fragment } from 'react'
 import Cover from '@/components/Cover'
 import ReadComic from '@/components/ReadComic'
+import UpgradeIcon from '@/icons/Upgrade'
+import HowPointsWork from '@/components/HowPointsWork'
 
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 const imbue = Imbue({ weight: '300', subsets: ['latin'] })
@@ -71,7 +72,9 @@ const Page = () => {
 
   return (
     <main className={`min-h-screen p-4 flex flex-col items-center ${antonio.className}`}>
-      <h2 className={`mb-8 text-center text-4xl sm:text-6xl ${imbue.className}`}>MY INVENTORY</h2>
+      <HowPointsWork />
+
+      <h2 className={`my-8 text-center text-4xl sm:text-6xl ${imbue.className}`}>MY INVENTORY</h2>
 
       <div className='w-full mb-8 p-8 flex items-center justify-center rounded-lg bg-red-950/80 text-xl sm:text-3xl'>
         TOTAL COLLECTOR&apos;S POINTS:{' '}

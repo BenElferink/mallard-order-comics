@@ -8,8 +8,7 @@ import formatHex from '@/functions/formatHex'
 import getSerialStringFromSerialNumber from '@/functions/getSerialStringFromSerialNumber'
 import Loader from '@/components/Loader'
 import Cover from '@/components/Cover'
-import type { CoverVariant } from '@/@types'
-import { POLICY_IDS } from '@/constants'
+import { COVER_VARIANTS, POLICY_IDS } from '@/constants'
 
 const api = new Api()
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
@@ -61,7 +60,7 @@ const Page = () => {
   return (
     <main className={`min-h-screen p-4 flex flex-col items-center ${antonio.className}`}>
       <div className='flex flex-wrap sm:flex-nowrap items-center justify-center'>
-        {(['Common', 'Rare', 'Super Rare', 'Mythic'] as CoverVariant[]).map((str) => (
+        {COVER_VARIANTS.map((str) => (
           <div key={str} className='w-[40vw] sm:w-fit mx-2 sm:mx-4 flex flex-col items-center'>
             <Cover variant={str} className='border-2 border-yellow-900 drop-shadow-[0_0_0.5rem_rgba(0,0,0,1)]' />
             <span className='my-2 text-sm sm:text-xl'>{str}</span>
