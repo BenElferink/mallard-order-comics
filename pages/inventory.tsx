@@ -7,6 +7,7 @@ import Loader from '@/components/Loader'
 import UpgradeIcon from '@/icons/Upgrade'
 import { Fragment } from 'react'
 import Cover from '@/components/Cover'
+import ReadComic from '@/components/ReadComic'
 
 const antonio = Antonio({ weight: '300', subsets: ['latin'] })
 const imbue = Imbue({ weight: '300', subsets: ['latin'] })
@@ -21,23 +22,6 @@ const Page = () => {
         <div>{populatingWallet ? <Loader /> : <Auth />}</div>
       </main>
     )
-  }
-
-  const HeadOne = () => {
-    return <span className='my-2 sm:my-4 flex items-center justify-center'>ISSUE #</span>
-  }
-  const HeadTwo = () => {
-    return <span className='my-2 sm:my-4 flex items-center justify-center'>STATS</span>
-  }
-  const HeadThree = () => {
-    return (
-      <span className='my-2 sm:my-4 flex items-center justify-center'>
-        UPGRADE <UpgradeIcon className='w-4 ml-2' />
-      </span>
-    )
-  }
-  const HeadFour = () => {
-    return <span className='my-2 sm:my-4 flex items-center justify-center'>REDEMPTION</span>
   }
 
   const LevelUpButton = ({ level }: { level: number }) => {
@@ -79,6 +63,11 @@ const Page = () => {
       </Fragment>
     )
   }
+  const ReadButton = () => {
+    return (
+      <ReadComic className='w-32 py-2 text-center text-xl rounded-lg border bg-gradient-to-b from-[#003E3A] to-[#001027] hover:bg-gradient-to-b hover:from-[#005E3A] hover:to-[#001027] disabled:opacity-40 disabled:cursor-not-allowed' />
+    )
+  }
 
   return (
     <main className={`min-h-screen p-4 flex flex-col items-center ${antonio.className}`}>
@@ -92,17 +81,22 @@ const Page = () => {
       <table className='w-full border-separate border-spacing-0 border border-sky-500 rounded-lg bg-black/60'>
         <thead className={`hidden sm:table-header-group border-b-2 border-b-sky-500 ${antonio.className}`}>
           <tr>
-            <th className='border-b-2 border-b-sky-500 text-center text-2xl'>
-              <HeadOne />
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>
+              <span className='flex items-center justify-center'>ISSUE #</span>
             </th>
-            <th className='border-b-2 border-b-sky-500 text-center text-2xl'>
-              <HeadTwo />
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>
+              <span className='flex items-center justify-center'>STATS</span>
             </th>
-            <th className='border-b-2 border-b-sky-500 text-center text-2xl'>
-              <HeadThree />
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>
+              <span className='flex items-center justify-center'>
+                UPGRADE <UpgradeIcon className='w-4 ml-2' />
+              </span>
             </th>
-            <th className='border-b-2 border-b-sky-500 text-center text-2xl'>
-              <HeadFour />
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>
+              <span className='flex items-center justify-center'>REDEMPTION</span>
+            </th>
+            <th className='py-4 border-b-2 border-b-sky-500 text-center text-2xl'>
+              <span className='flex items-center justify-center'>READ</span>
             </th>
           </tr>
         </thead>
@@ -121,14 +115,21 @@ const Page = () => {
                     </div>
 
                     <div className='flex flex-col sm:hidden'>
-                      <div className='mb-4 flex flex-col items-center justify-center'>
-                        <HeadThree />
+                      <div className='mb-2 flex flex-col items-center justify-center'>
+                        <span className='mb-0.5 flex items-center justify-center'>
+                          UPGRADE <UpgradeIcon className='w-3 ml-2' />
+                        </span>
                         <LevelUpButton level={level} />
                       </div>
 
-                      <div className='mt-4 flex flex-col items-center justify-center'>
-                        <HeadFour />
+                      <div className='mb-2 flex flex-col items-center justify-center'>
+                        <span className='mb-0.5 flex items-center justify-center'>REDEMPTION</span>
                         <ClaimButton level={level} isClaimed={isClaimed} />
+                      </div>
+
+                      <div className='mb-2 flex flex-col items-center justify-center'>
+                        <span className='mb-0.5 flex items-center justify-center'>READ</span>
+                        <ReadButton />
                       </div>
                     </div>
                   </div>
@@ -168,6 +169,12 @@ const Page = () => {
                 <td className={'hidden sm:table-cell ' + (idx === holderTokens.length - 1 ? '' : 'border-b-2 border-b-sky-500')}>
                   <div className='py-8 px-4 flex items-center justify-center'>
                     <ClaimButton level={level} isClaimed={isClaimed} />
+                  </div>
+                </td>
+
+                <td className={'hidden sm:table-cell ' + (idx === holderTokens.length - 1 ? '' : 'border-b-2 border-b-sky-500')}>
+                  <div className='py-8 px-4 flex items-center justify-center'>
+                    <ReadButton />
                   </div>
                 </td>
               </tr>

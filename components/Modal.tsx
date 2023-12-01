@@ -13,7 +13,7 @@ const Modal = (props: PropsWithChildren<{ open: boolean; onClose: () => void }>)
     >
       {open ? (
         <section className='relative rounded-xl'>
-          <div className='overflow-y-auto w-screen h-screen sm:w-fit sm:h-fit sm:max-w-[90vw] sm:max-h-[90vh] p-8 sm:rounded-xl bg-neutral-950 border'>
+          <div className='w-screen h-screen sm:w-fit sm:h-fit sm:max-w-[90vw] sm:max-h-[90vh] p-2 pt-8 sm:p-8 flex flex-col items-center sm:rounded-xl bg-neutral-950 sm:border overflow-y-auto'>
             <button className='w-6 h-6 rounded-full absolute top-2 right-4 z-10' onClick={onClose}>
               <XMarkIcon className='w-8 h-8 hover:animate-spin' />
             </button>
