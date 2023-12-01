@@ -45,7 +45,7 @@ const Auth = () => {
             type='button'
             disabled={openConnectModal}
             onClick={() => toggleConnectModal(true)}
-            className={`w-[220px] m-1 p-3 flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
+            className={`w-[210px] m-1 py-3 flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
           >
             <Image
               src={installedWallets.find((item) => item.name === name)?.icon || ''}
@@ -65,7 +65,7 @@ const Auth = () => {
               type='button'
               disabled={openConnectModal}
               onClick={() => toggleConnectModal(true)}
-              className={`w-[220px] m-1 p-3 hidden sm:flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
+              className={`w-[210px] m-1 py-3 hidden sm:flex items-center justify-center rounded-lg border border-transparent hover:border-neutral-50 focus:border-neutral-50 bg-gradient-to-b from-sky-900 via-teal-950 to-sky-900 disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${inter.className}`}
             >
               CONNECT WALLET
             </button>
@@ -85,7 +85,7 @@ const Auth = () => {
         )}
 
         {connected && !!populatedWallet ? (
-          <div className='w-[220px] m-1 p-3 flex items-center justify-center rounded-lg border border-transparent bg-red-800'>
+          <div className='w-[210px] m-1 py-3 flex items-center justify-center rounded-lg border border-transparent bg-red-800'>
             <StarIcon className='w-6 h-6 mr-2' />
             <span>COLLECTOR&apos;S POINTS: {populatedWallet.points}</span>
           </div>

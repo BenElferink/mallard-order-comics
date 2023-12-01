@@ -62,7 +62,7 @@ const Page = () => {
     <main className={`min-h-screen p-4 flex flex-col items-center ${antonio.className}`}>
       <div className='flex flex-wrap sm:flex-nowrap items-center justify-center'>
         {(['Common', 'Rare', 'Super Rare', 'Mythic'] as CoverVariant[]).map((str) => (
-          <div key={str} className='w-[42vw] sm:w-fit mx-2 sm:mx-4 flex flex-col items-center'>
+          <div key={str} className='w-[40vw] sm:w-fit mx-2 sm:mx-4 flex flex-col items-center'>
             <Cover variant={str} className='border-2 border-yellow-900 drop-shadow-[0_0_0.5rem_rgba(0,0,0,1)]' />
             <span className='my-2 text-sm sm:text-xl'>{str}</span>
           </div>
