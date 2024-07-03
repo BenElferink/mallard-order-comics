@@ -34,7 +34,9 @@ const Header = () => {
             >
               MY INVENTORY
             </Link>
-            <ReadComic className='min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed' />
+            {!!populatedWallet?.tokens?.length ? (
+              <ReadComic className='min-w-[200px] m-1 p-3 flex items-center justify-center rounded-full border border-sky-500 hover:border-neutral-50 focus:border-neutral-50 bg-transparent disabled:border-transparent disabled:opacity-50 disabled:cursor-not-allowed' />
+            ) : null}
           </div>
         ) : null}
       </div>
