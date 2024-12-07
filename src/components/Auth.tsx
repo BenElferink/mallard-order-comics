@@ -28,7 +28,7 @@ const Auth = () => {
       if (lsValue) connect(lsValue)
     } else {
       if (connected) {
-        localStorage.setItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'], name)
+        localStorage.setItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'], name || '')
         toggleConnectModal(false)
       } else {
         localStorage.removeItem(LOCAL_STORAGE_KEYS['WALLET_PROVIDER'])
@@ -49,7 +49,7 @@ const Auth = () => {
           >
             <Image
               src={installedWallets.find((item) => item.name === name)?.icon || ''}
-              alt={name}
+              alt={name || ''}
               width={35}
               height={35}
               className='w-6 h-6 mr-2 drop-shadow-[0_0_1px_rgba(0,0,0,1)]'

@@ -68,7 +68,7 @@ export const DataProvider = (props: PropsWithChildren) => {
       toast.loading('CONNECTING WALLET')
 
       populate().then(() => {
-        const walletName = name.toUpperCase().replace('WALLET', '').trim()
+        const walletName = name?.toUpperCase().replace('WALLET', '').trim()
 
         toast.dismiss()
         toast.success(`${walletName} CONNECTED`)
